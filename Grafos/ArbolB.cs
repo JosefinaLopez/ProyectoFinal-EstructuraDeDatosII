@@ -52,8 +52,35 @@ namespace Grafos
         private void BtnRecorridoPreorden_Click(object sender, EventArgs e)
         {
            MessageBox.Show("La Cantidad de Hojas en el Arbol es de : " +  ContarHoja(raiz, 0));
-            
+            List<NodoArbol> hojas = ObtenerHojas(raiz);
+            foreach (NodoArbol hoja in hojas)
+            {
+                // Realizar operaciones con cada nodo hoja
+                MessageBox.Show("Valor de Hoja: " + hoja.Texto);
+            }
         }
+        private List<NodoArbol> ObtenerHojas(NodoArbol nodo)
+        {
+            List<NodoArbol> hojas = new List<NodoArbol>();
+
+            if (nodo == null)
+            {
+                return hojas;
+            }
+            else
+            {
+                if (nodo.Izquierdo == null && nodo.Derecho == null)
+                {
+                    hojas.Add(nodo);
+                }
+
+                hojas.AddRange(ObtenerHojas(nodo.Izquierdo));
+                hojas.AddRange(ObtenerHojas(nodo.Derecho));
+            }
+
+            return hojas;
+        }
+
 
         private int ContarHoja(NodoArbol nodo, int cont)
         {
